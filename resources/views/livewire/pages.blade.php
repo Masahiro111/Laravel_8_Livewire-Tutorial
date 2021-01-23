@@ -5,6 +5,55 @@
         </x-jet-button>
     </div>
 
+    <!-- The data table -->
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Title
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Link
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Content
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            @if ($data->count())
+            @foreach ($data as $item)
+
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    dummy title
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    dummy link
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    dummy content
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    Admin
+                </td>
+            </tr>
+
+            @endforeach
+            @else
+
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" colspan="4">no results found</td>
+            </tr>
+
+            @endif
+            <!-- More items... -->
+        </tbody>
+    </table>
+
     <!-- Modal Form -->
     <x-jet-dialog-modal wire:model="modalFormVisible">
         <x-slot name="title">

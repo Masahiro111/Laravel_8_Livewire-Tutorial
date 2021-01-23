@@ -13,6 +13,13 @@ class Pages extends Component
     public $title;
     public $content;
 
+
+    public function read()
+    {
+        return Page::paginate(5);
+    }
+
+
     public function rules()
     {
         return [
@@ -65,6 +72,8 @@ class Pages extends Component
 
     public function render()
     {
-        return view('livewire.pages');
+        return view('livewire.pages', [
+            'data' => $this->read(),
+        ]);
     }
 }
