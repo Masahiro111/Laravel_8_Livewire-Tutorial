@@ -29,16 +29,21 @@
 
             <tr>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    dummy title
+                    {{ $item->title }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     dummy link
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    dummy content
+                    {{ $item->content }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    Admin
+                    <x-jet-button wire:click="updateShowModal({{ $item->id }})">
+                        {{ __('Update') }}
+                    </x-jet-button>
+                    <x-jet-button wire:click="createShowModal">
+                        {{ __('Delete') }}
+                    </x-jet-button>
                 </td>
             </tr>
 
@@ -57,7 +62,7 @@
     <!-- Modal Form -->
     <x-jet-dialog-modal wire:model="modalFormVisible">
         <x-slot name="title">
-            {{ __('Save Page') }}
+            {{ __('Save Page') }} {{ $modelId }}
         </x-slot>
 
         <x-slot name="content">

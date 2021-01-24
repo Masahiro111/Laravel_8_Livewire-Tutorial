@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 class Pages extends Component
 {
     public $modalFormVisible = false;
+    public $modelId;
     public $slug;
     public $title;
     public $content;
@@ -51,6 +52,12 @@ class Pages extends Component
 
     public function createShowModal()
     {
+        $this->modalFormVisible = true;
+    }
+
+    public function updateShowModal($id)
+    {
+        $this->modelId = $id;
         $this->modalFormVisible = true;
     }
 
