@@ -11,7 +11,8 @@ class Frontpage extends Component
     public $title;
     public $content;
 
-    public function mount($urlslug)
+
+    public function mount($urlslug = "")
     {
         $this->retrieveContent($urlslug);
     }
