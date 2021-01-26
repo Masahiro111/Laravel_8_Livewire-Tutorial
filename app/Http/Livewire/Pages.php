@@ -6,6 +6,7 @@ use App\Models\Page;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 class Pages extends Component
 {
@@ -51,7 +52,7 @@ class Pages extends Component
 
     public function updatedTitle($value)
     {
-        $this->generateSlug($value);
+        $this->slug = Str::slug($value);
     }
 
     public function updatedIsSetToDefaultHomePage()
@@ -62,13 +63,6 @@ class Pages extends Component
     public function updatedIsSetToDefaultNotFoundPage()
     {
         $this->isSetToDefaultHomePage = null;
-    }
-
-    private function generateSlug($value)
-    {
-        $process1 = str_replace(' ', '-', $value);
-        $process2 = strtolower($process1);
-        $this->slug = $process2;
     }
 
     public function unassignDefaultHomePage()
@@ -96,7 +90,7 @@ class Pages extends Component
         $this->unassignDefaultNotFoundPage();
         Page::create($this->modelData());
         $this->modalFormVisible = false;
-        $this->resetVars();
+        $this->reset();
     }
 
     public function update()
@@ -120,14 +114,14 @@ class Pages extends Component
     public function createShowModal()
     {
         $this->resetValidation();
-        $this->resetVars();
+        $this->reset();
         $this->modalFormVisible = true;
     }
 
     public function updateShowModal($id)
     {
         $this->resetValidation();
-        $this->resetVars();
+        $this->reset();
         $this->modelId = $id;
         $this->modalFormVisible = true;
         $this->loadModel();
@@ -158,16 +152,6 @@ class Pages extends Component
             'is_default_home' => $this->isSetToDefaultHomePage,
             'is_default_not_found' => $this->isSetToDefaultNotFoundPage,
         ];
-    }
-
-    public function resetVars()
-    {
-        $this->modelId = null;
-        $this->title = null;
-        $this->slug = null;
-        $this->content = null;
-        $this->isSetToDefaultNotFoundPage = null;
-        $this->isSetToDefaultHomePage = null;
     }
 
     public function render()
