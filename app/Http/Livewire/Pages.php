@@ -44,7 +44,7 @@ class Pages extends Component
      *
      * @return void
      */
-    public function mount()
+    public function mount($usrlslug = null)
     {
         $this->resetPage();
     }
@@ -92,6 +92,8 @@ class Pages extends Component
     public function create()
     {
         $this->validate();
+        $this->unassignDefaultHomePage();
+        $this->unassignDefaultNotFoundPage();
         Page::create($this->modelData());
         $this->modalFormVisible = false;
         $this->resetVars();
