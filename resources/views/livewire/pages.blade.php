@@ -35,8 +35,14 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $item->title }}
+                                    {!! $item->is_default_home ? '<span
+                                        class="text-green-600 text-xs font-bold">[Default
+                                        Home Page]</span>' : '' !!}
+                                    {!! $item->is_default_not_found ? '<span
+                                        class="text-red-600 text-xs font-bold">[Default
+                                        404 Page]</span>' : '' !!}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class=" px-6 py-4 whitespace-nowrap">
                                     <a class="text-indigo-600 hover:text-indigo-900" target="_blank"
                                         href="{{ URL::to('/' . $item->slug) }}">
                                         {{ $item->slug }}
