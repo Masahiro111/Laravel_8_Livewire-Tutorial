@@ -54,11 +54,39 @@ class Pages extends Component
         $this->generateSlug($value);
     }
 
+    public function updatedIsSetToDefaultHomePage()
+    {
+        $this->isSetToDefaultNotFoundPage = null;
+    }
+
+    public function updatedIsSetToDefaultNotFoundPage()
+    {
+        $this->isSetToDefaultHomePage = null;
+    }
+
     private function generateSlug($value)
     {
         $process1 = str_replace(' ', '-', $value);
         $process2 = strtolower($process1);
         $this->slug = $process2;
+    }
+
+    public function unassignDefaultHomePage()
+    {
+        if ($this->isSetToDefaultHomePage != null) {
+            Page::where('is_default_home', true)->update([
+                'is_default_home' => false,
+            ]);
+        }
+    }
+
+    public function unassignDefaultNotFoundPage()
+    {
+        if ($this->isSetToDefaultNotFoundPage != null) {
+            Page::where('is_default_not_found', true)->update([
+                'is_default_not_found' => false,
+            ]);
+        }
     }
 
     public function create()
@@ -72,6 +100,8 @@ class Pages extends Component
     public function update()
     {
         $this->validate();
+        $this->unassignDefaultHomePage();
+        $this->unassignDefaultNotFoundPage();
         Page::find($this->modelId)->update($this->modelData());
         $this->modalFormVisible = false;
     }
@@ -113,6 +143,8 @@ class Pages extends Component
         $this->title = $data->title;
         $this->slug = $data->slug;
         $this->content = $data->content;
+        $this->isSetToDefaultHomePage = !$data->is_default_home ? null : true;
+        $this->isSetToDefaultNotFoundPage = !$data->is_default_not_found ? null : true;
     }
 
     public function modelData()
@@ -132,6 +164,8 @@ class Pages extends Component
         $this->title = null;
         $this->slug = null;
         $this->content = null;
+        $this->isSetToDefaultNotFoundPage = null;
+        $this->isSetToDefaultHomePage = null;
     }
 
     public function render()
