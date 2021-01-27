@@ -13,17 +13,24 @@
         </div>
         <div class="h-12 w-full flex items-center">
             <a href="{{ url('/')}}" class="w-full">
-                <img class="h-8" src="{{ url('/img/logo.svg')}}" />
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="block h-9 w-auto">
+                    <path
+                        d="M11.395 44.428C4.557 40.198 0 32.632 0 24 0 10.745 10.745 0 24 0a23.891 23.891 0 0113.997 4.502c-.2 17.907-11.097 33.245-26.602 39.926z"
+                        fill="#6875F5"></path>
+                    <path
+                        d="M14.134 45.885A23.914 23.914 0 0024 48c13.255 0 24-10.745 24-24 0-3.516-.756-6.856-2.115-9.866-4.659 15.143-16.608 27.092-31.75 31.751z"
+                        fill="#6875F5"></path>
+                </svg>
             </a>
         </div>
         <div class="flex justify-end sm:w-8/12">
             {{-- Top Navigation --}}
             <ul class="hidden sm:flex sm:text-left text-gray-200 text-xs">
-                @foreach ($topNavLinks as $item)
+                {{-- @foreach ($topNavLinks as $item)
                 <a href="{{ url('/'.$item->slug) }}">
-                    <li class="cursor-pointer px-4 py-2 hover:bg-gray-800">{{ $item->label }}</li>
+                <li class="cursor-pointer px-4 py-2 hover:bg-gray-800">{{ $item->label }}</li>
                 </a>
-                @endforeach
+                @endforeach --}}
             </ul>
         </div>
     </nav>
@@ -31,30 +38,30 @@
         <aside class="bg-gray-900 text-gray-700 divide-y divide-gray-700 divide-dashed sm:w-4/12 md:w-3/12 lg:w-2/12">
             {{-- Desktop Web View --}}
             <ul class="hidden text-gray-200 text-xs sm:block sm:text-left">
-                @foreach ($sideBarLinks as $item)
+                {{-- @foreach ($sideBarLinks as $item)
                 <a href="{{ url('/'.$item->slug) }}">
-                    <li class="cursor-pointer px-4 py-2 hover:bg-gray-800">{{ $item->label }}</li>
+                <li class="cursor-pointer px-4 py-2 hover:bg-gray-800">{{ $item->label }}</li>
                 </a>
-                @endforeach
+                @endforeach --}}
             </ul>
 
             {{-- Mobile Web View --}}
             <div :class="show ? 'block' : 'hidden'" class="pb-3 divide-y divide-gray-800 block sm:hidden">
                 <ul class="text-gray-200 text-xs">
-                    @foreach ($sideBarLinks as $item)
+                    {{-- @foreach ($sideBarLinks as $item)
                     <a href="{{ url('/'.$item->slug) }}">
-                        <li class="cursor-pointer px-4 py-2 hover:bg-gray-800">{{ $item->label }}</li>
+                    <li class="cursor-pointer px-4 py-2 hover:bg-gray-800">{{ $item->label }}</li>
                     </a>
-                    @endforeach
+                    @endforeach --}}
                 </ul>
 
                 {{-- Top Navigation Mobile Web View --}}
                 <ul class="text-gray-200 text-xs">
-                    @foreach ($topNavLinks as $item)
+                    {{-- @foreach ($topNavLinks as $item)
                     <a href="{{ url('/'.$item->slug) }}">
-                        <li class="cursor-pointer px-4 py-2 hover:bg-gray-800">{{ $item->label }}</li>
+                    <li class="cursor-pointer px-4 py-2 hover:bg-gray-800">{{ $item->label }}</li>
                     </a>
-                    @endforeach
+                    @endforeach --}}
                 </ul>
             </div>
         </aside>
