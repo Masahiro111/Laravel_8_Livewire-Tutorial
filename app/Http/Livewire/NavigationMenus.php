@@ -11,7 +11,7 @@ class NavigationMenus extends Component
 
     use WithPagination;
 
-    public $modalFormVisible = false;
+    public $modalFormVisible;
 
     public $modelId;
     public $label;
