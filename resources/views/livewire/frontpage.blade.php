@@ -38,11 +38,11 @@
         <aside class="bg-gray-900 text-gray-700 divide-y divide-gray-700 divide-dashed sm:w-4/12 md:w-3/12 lg:w-2/12">
             {{-- Desktop Web View --}}
             <ul class="hidden text-gray-200 text-xs sm:block sm:text-left">
-                {{-- @foreach ($sideBarLinks as $item)
+                @foreach ($sidebarLinks as $item)
                 <a href="{{ url('/'.$item->slug) }}">
-                <li class="cursor-pointer px-4 py-2 hover:bg-gray-800">{{ $item->label }}</li>
+                    <li class="cursor-pointer px-4 py-3 hover:bg-gray-800">{{ $item->label }}</li>
                 </a>
-                @endforeach --}}
+                @endforeach
             </ul>
 
             {{-- Mobile Web View --}}

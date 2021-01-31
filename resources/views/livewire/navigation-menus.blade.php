@@ -120,9 +120,9 @@
             </x-jet-secondary-button>
 
             @if ( $modelId)
-            <x-jet-danger-button class="ml-2" wire:click="update" wire:loading.attr="disabled">
+            <x-jet-button class="ml-2" wire:click="update" wire:loading.attr="disabled">
                 {{ __('Update') }}
-            </x-jet-danger-button>
+            </x-jet-button>
             @else
             <x-jet-button class="ml-2" wire:click="create" wire:loading.attr="disabled">
                 {{ __('Save') }}
@@ -150,7 +150,7 @@
             </x-jet-secondary-button>
 
             <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
-                {{ __('Delete Page') }}
+                {{ __('Delete Navigation Item') }}
             </x-jet-danger-button>
         </x-slot>
     </x-jet-dialog-modal>
