@@ -38,8 +38,17 @@
                                 <td class="px-6 py-2">{{ $item->type }}</td>
                                 <td class="px-6 py-2">{{ $item->sequence }}</td>
                                 <td class="px-6 py-2">{{ $item->label }}</td>
-                                <td class="px-6 py-2"><a href="{{ url($item->slug) }}"
-                                        class="text-indigo-600 hover:text-indigo-900" target="_blank">{{ $item->slug }}
+                                <td class="px-6 py-2">
+                                    <a href="{{ url($item->slug) }}" class="text-indigo-600 hover:text-indigo-900"
+                                        target="_blank">{{ $item->slug }}
+                                </td>
+                                <td class="px-6 py-2 flex justify-end">
+                                    <x-jet-button class="ml-4" wire:click="updateShowModal({{ $item->id }})">
+                                        {{ __('Update') }}
+                                    </x-jet-button>
+                                    <x-jet-danger-button class="ml-4" wire:click="deleteShowModal({{ $item->id }})">
+                                        {{ __('Delete') }}
+                                    </x-jet-danger-button>
                                 </td>
                             </tr>
 

@@ -56,7 +56,27 @@ class NavigationMenus extends Component
 
     public function createShowModal()
     {
+        $this->resetValidation();
+        $this->reset();
         $this->modalFormVisible = true;
+    }
+
+    public function updateShowModal($id)
+    {
+        $this->resetValidation();
+        $this->reset();
+        $this->modalFormVisible = true;
+        $this->modelId = $id;
+        $this->loadModel();
+    }
+
+    public function loadModel()
+    {
+        $data = NavigationMenu::find($this->modelId);
+        $this->label = $data->label;
+        $this->slug = $data->slug;
+        $this->type = $data->type;
+        $this->sequence = $data->sequence;
     }
 
     public function render()
