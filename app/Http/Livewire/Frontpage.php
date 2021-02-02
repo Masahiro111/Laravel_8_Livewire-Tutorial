@@ -44,10 +44,20 @@ class Frontpage extends Component
             ->get();
     }
 
+    private function topNavLinks()
+    {
+        return DB::table('navigation_menus')
+            ->where('type', '=', 'TopNav')
+            ->orderBy('sequence', 'asc')
+            ->orderBy('created_at', 'asc')
+            ->get();
+    }
+
     public function render()
     {
         return view('livewire.frontpage', [
             'sidebarLinks' => $this->sideBarLinks(),
+            'TopNavLinks' => $this->topNavLinks(),
         ])->layout('layouts.frontpage');
     }
 }
