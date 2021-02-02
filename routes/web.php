@@ -21,6 +21,7 @@ use App\Http\Livewire\Frontpage;
 Route::group(['middleware' => [
     'auth:sanctum',
     'verified',
+    'accessrole',
 ]], function () {
 
     Route::get('/dashboard', function () {
