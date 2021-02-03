@@ -17,15 +17,31 @@ class EnsureUserRoleIsAllowedToAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        echo 'The middleware for access role <br>';
 
-        $userRole = auth()->user()->role;
-        $currentRouteName = Route::currentRouteName();
+        try {
+            $userRole = auth()->user()->role;
+            $currentRouteName = Route::currentRouteName();
 
-        echo 'UserRole: ' . $userRole . '<br>';
-        echo 'Current Route Name: ' . $currentRouteName . '<br>';
+            if (in_array($currentRouteName, $this->userAccessRole()[$userRole])) {
+                return $next($request);
+            } else {
+                abort(403, 'Tnauthorized action.');
+            }
+        } catch (\Throwable $th) {
+            abort(403, 'Unauthorized action.');
+        }
+    }
 
-
-        return $next($request);
+    private function userAccessRole()
+    {
+        return [
+            'user' => [
+                'dashboard'
+            ],
+            'admin' => [
+                'pages',
+                'navigation-menus',
+            ],
+        ];
     }
 }
