@@ -11,7 +11,9 @@ class LivewireCustomCrudCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:livewire:crud';
+    protected $signature = 'make:livewire:crud 
+    {nameOfTheClass? : The name of the class.},
+    {nameOfTheModelClass? : The name of the model class. }';
 
     /**
      * The console command description.
@@ -20,6 +22,8 @@ class LivewireCustomCrudCommand extends Command
      */
     protected $description = 'Creates a custom livewire CRUD.';
 
+    protected $nameOfTheClass;
+    protected $nameOfTheModelClass;
     /**
      * Create a new command instance.
      *
@@ -37,6 +41,28 @@ class LivewireCustomCrudCommand extends Command
      */
     public function handle()
     {
-        $this->info('This is your custom Livewire command for CRUD.');
+        // $this->info('This is your custom Livewire command for CRUD.');
+        $this->gatheParameters();
+    }
+
+    protected function gatheParameters()
+    {
+        // $this->info($this->argument('nameOfTheClass'));
+        // $this->info($this->argument('nameOfTheModelClass'));
+
+        $this->nameOfTheClass = $this->argument('nameOfTheClass');
+        $this->nameOfTheModelClass = $this->argument('nameOfTheModelClass');
+
+        // if you didn't input the name of the class
+        if (!$this->nameOfTheClass) {
+            $this->nameOfTheClass = $this->ask('Enter class name.');
+        }
+
+        // if you didn't input the name of the class
+        if (!$this->nameOfTheModelClass) {
+            $this->nameOfTheModelClass = $this->ask('Enter model name.');
+        }
+
+        $this->info($this->nameOfTheClass . ' ' . $this->nameOfTheModelClass);
     }
 }
