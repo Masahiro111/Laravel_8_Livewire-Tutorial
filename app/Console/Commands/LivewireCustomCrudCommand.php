@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class LivewireCustomCrudCommand extends Command
 {
@@ -11,19 +13,24 @@ class LivewireCustomCrudCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:livewire:crud 
+    protected $signature = 'make:livewire:crud
     {nameOfTheClass? : The name of the class.},
-    {nameOfTheModelClass? : The name of the model class. }';
+    {nameOfTheModelClass? : The name of the model class.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Creates a custom livewire CRUD.';
+    protected $description = 'Creates a custom livewire CRUD';
 
+    /**
+     * Our custom class properties here!
+     */
     protected $nameOfTheClass;
     protected $nameOfTheModelClass;
+    protected $file;
+
     /**
      * Create a new command instance.
      *
@@ -32,6 +39,7 @@ class LivewireCustomCrudCommand extends Command
     public function __construct()
     {
         parent::__construct();
+        $this->file = new Filesystem();
     }
 
     /**
@@ -41,28 +49,101 @@ class LivewireCustomCrudCommand extends Command
      */
     public function handle()
     {
-        // $this->info('This is your custom Livewire command for CRUD.');
-        $this->gatheParameters();
+        // Gathers all parameters
+        $this->gatherParameters();
+
+        // Generates the Livewire Class File
+        $this->generateLivewireCrudClassfile();
+
+        // Generates the Livewire View File
+        $this->generateLivewireCrudViewFile();
     }
 
-    protected function gatheParameters()
+    /**
+     * Gather all necessary parameters
+     *
+     * @return void
+     */
+    protected function gatherParameters()
     {
-        // $this->info($this->argument('nameOfTheClass'));
-        // $this->info($this->argument('nameOfTheModelClass'));
-
         $this->nameOfTheClass = $this->argument('nameOfTheClass');
         $this->nameOfTheModelClass = $this->argument('nameOfTheModelClass');
 
-        // if you didn't input the name of the class
+        // If you didn't input the name of the class
         if (!$this->nameOfTheClass) {
-            $this->nameOfTheClass = $this->ask('Enter class name.');
+            $this->nameOfTheClass = $this->ask('Enter class name');
         }
 
-        // if you didn't input the name of the class
+        // If you didn't input the name of the class
         if (!$this->nameOfTheModelClass) {
-            $this->nameOfTheModelClass = $this->ask('Enter model name.');
+            $this->nameOfTheModelClass = $this->ask('Enter model name');
         }
 
-        $this->info($this->nameOfTheClass . ' ' . $this->nameOfTheModelClass);
+        // Convert to studly case
+        $this->nameOfTheClass = Str::studly($this->nameOfTheClass);
+        $this->nameOfTheModelClass = Str::studly($this->nameOfTheModelClass);
+    }
+
+    /**
+     * Generates the CRUD class file
+     *
+     * @return void
+     */
+    protected function generateLivewireCrudClassfile()
+    {
+        // Set the origin and destination for the livewire class file
+        $fileOrigin = base_path('/stubs/custom.livewire.crud.stub');
+        $fileDestination = base_path('/app/Http/Livewire/' . $this->nameOfTheClass . '.php');
+
+        if ($this->file->exists($fileDestination)) {
+            $this->info('This class file already exists: ' . $this->nameOfTheClass . '.php');
+            $this->info('Aborting class file creation.');
+            return false;
+        }
+
+        // Get the original string content of the file
+        $fileOriginalString = $this->file->get($fileOrigin);
+
+        // Replace the strings specified in the array sequentially
+        $replaceFileOriginalString = Str::replaceArray(
+            '{{}}',
+            [
+                $this->nameOfTheModelClass, // Name of the model class
+                $this->nameOfTheClass, // Name of the class
+                $this->nameOfTheModelClass, // Name of the model class
+                $this->nameOfTheModelClass, // Name of the model class
+                $this->nameOfTheModelClass, // Name of the model class
+                $this->nameOfTheModelClass, // Name of the model class
+                $this->nameOfTheModelClass, // Name of the model class
+                Str::kebab($this->nameOfTheClass), // From "FooBar" to "foo-bar"
+            ],
+            $fileOriginalString
+        );
+
+        // Put the content into the destination directory
+        $this->file->put($fileDestination, $replaceFileOriginalString);
+        $this->info('Livewire class file created: ' . $fileDestination);
+    }
+
+    /**
+     * generateLivewireCrudViewFile
+     *
+     * @return void
+     */
+    protected function generateLivewireCrudViewFile()
+    {
+        // Set the origin and destination for the livewire class file
+        $fileOrigin = base_path('/stubs/custom.livewire.crud.view.stub');
+        $fileDestination = base_path('/resources/views/livewire/' . Str::kebab($this->nameOfTheClass) . '.blade.php');
+
+        if ($this->file->exists($fileDestination)) {
+            $this->info('This view file already exists: ' . Str::kebab($this->nameOfTheClass) . '.php');
+            $this->info('Aborting view file creation.');
+            return false;
+        }
+
+        // Copy file to destination
+        $this->file->copy($fileOrigin, $fileDestination);
+        $this->info('Livewire view file created: ' . $fileDestination);
     }
 }
