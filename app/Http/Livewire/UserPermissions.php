@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 class UserPermissions extends Component
 {
     use WithPagination;
-    
+
     public $modalFormVisible;
     public $modalConfirmDeleteVisible;
     public $modelId;
@@ -17,6 +17,8 @@ class UserPermissions extends Component
     /**
      * Put your custom public properties here!
      */
+    public $role;
+    public $routeName;
 
     /**
      * The validation rules
@@ -25,7 +27,9 @@ class UserPermissions extends Component
      */
     public function rules()
     {
-        return [            
+        return [
+            'role' => 'required',
+            'routeName' => 'required',
         ];
     }
 
@@ -39,6 +43,8 @@ class UserPermissions extends Component
     {
         $data = UserPermission::find($this->modelId);
         // Assign the variables here
+        $this->role = $data->role;
+        $this->routeName = $data->route_name;
     }
 
     /**
@@ -49,7 +55,9 @@ class UserPermissions extends Component
      */
     public function modelData()
     {
-        return [          
+        return [
+            'role' => $this->role,
+            'route_name' => $this->routeName,
         ];
     }
 
@@ -138,7 +146,7 @@ class UserPermissions extends Component
     {
         $this->modelId = $id;
         $this->modalConfirmDeleteVisible = true;
-    }    
+    }
 
     public function render()
     {

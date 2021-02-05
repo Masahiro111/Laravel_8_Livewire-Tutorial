@@ -79,10 +79,9 @@
                 <option value="">-- Select a Role --</option>
                 @foreach (App\Models\User::userRoleList() as $key => $value)
                 <option value="{{ $key}}">{{$value}}</option>
-
                 @endforeach
             </select>
-            @error('') <span class="error">{{ $message }}</span> @enderror
+            @error('role') <span class="error">{{ $message }}</span> @enderror
         </div>
     </x-slot>
 

@@ -20,4 +20,15 @@ class UserPermission extends Model
             'user-permissions',
         ];
     }
+
+    public static function isRoleHasRightToAccess($userRole, $routeName)
+    {
+        try {
+            $model = static::where('role', $userRole)
+                ->where('route_name', $routeName)
+                ->first();
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
 }
